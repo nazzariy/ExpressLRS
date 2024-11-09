@@ -30,7 +30,7 @@
 
 ### PERFORMANCE OPTIONS: ###
 
--DLOCK_ON_FIRST_CONNECTION
+#-DLOCK_ON_FIRST_CONNECTION
 
 # For TX devices with fans, FAN_MIN_RUNTIME keeps the fan running even after the power level has
 # dropped below the configured Fan Threshold. This prevents the fan from turning on and off every
@@ -55,7 +55,7 @@
 
 ### OTHER OPTIONS: ###
 
--DAUTO_WIFI_ON_INTERVAL=60
+#-DAUTO_WIFI_ON_INTERVAL=60
 #-DHOME_WIFI_SSID=""
 #-DHOME_WIFI_PASSWORD=""
 
