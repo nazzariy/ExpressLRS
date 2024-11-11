@@ -61,35 +61,22 @@ void OLEDDisplay::printScreenshot()
 {
     u8g2->writeBufferXBM(*TxBackpack);
 }
-
+ 
 void OLEDDisplay::displaySplashScreen()
 {
     u8g2->clearBuffer();
 #ifdef USE_OLED_SPI_SMALL
     if (OPT_USE_OLED_SPI_SMALL)
-    {
-        auto constexpr sz = 128 * 32 / 8;
-        uint8_t image[sz];
-        if (spi_flash_read(logo_image, image, sz) == ESP_OK)
-        {
-            u8g2->drawXBM(0, 0, 128, 32, image);
-        }
-    }
+        u8g2->drawXBM(38, 8, 42, 42, ua42);
     else
 #endif
-    {
-        auto constexpr sz = 128 * 64 / 8;
-        uint8_t image[sz];
-        if (spi_flash_read(logo_image, image, sz) == ESP_OK)
-        {
-            u8g2->drawXBM(0, 0, 128, 64, image);
-        }
+        u8g2->drawXBM(38, 8, 42, 42, ua42);
 
         char buffer[50];
         snprintf(buffer, sizeof(buffer), "ELRS-%.6s", version);
         u8g2->setFont(u8g2_font_profont10_mr);
         drawCentered(60, buffer);
-    }
+
     u8g2->sendBuffer();
 }
 
@@ -102,7 +89,7 @@ void OLEDDisplay::displayIdleScreen(uint8_t changed, uint8_t rate_index, uint8_t
         power += " *";
     }
 
-    u8g2->setFont(u8g2_font_t0_15_mr);
+    u8g2->setFont(u8g2_font_7x13_mr);
     if (connectionState == radioFailed)
     {
         drawCentered(15, "BAD");
@@ -110,8 +97,8 @@ void OLEDDisplay::displayIdleScreen(uint8_t changed, uint8_t rate_index, uint8_t
     }
     else if (connectionState == noCrossfire)
     {
-        drawCentered(15, "NO");
-        drawCentered(32, "HANDSET");
+        drawCentered(25, "NO");
+        drawCentered(42, "HANDSET");
     }
     else if (OPT_USE_OLED_SPI_SMALL)
     {

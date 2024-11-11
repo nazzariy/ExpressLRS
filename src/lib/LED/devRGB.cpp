@@ -464,8 +464,24 @@ static int timeout()
         blinkyColor.h = 0;
         return flashLED(blinkyColor, 192, 0, LEDSEQ_RADIO_FAILED, sizeof(LEDSEQ_RADIO_FAILED));
     case noCrossfire:
-        blinkyColor.h = 10;
-        return flashLED(blinkyColor, 192, 0, LEDSEQ_NO_CROSSFIRE, sizeof(LEDSEQ_NO_CROSSFIRE));
+    // Встановлюємо два кольори: синій і жовтий
+    static uint8_t toggle = 0;  // Лічильник для чергування кольорів
+    if (toggle == 0) {
+        // Синій
+        blinkyColor.h = 170;   // Синій колір
+        blinkyColor.s = 255;
+        blinkyColor.v = 128;
+    } else {
+        // Жовтий
+        blinkyColor.h = 10;    // Жовтий колір
+        blinkyColor.s = 255;
+        blinkyColor.v = 128;
+    }
+    // Встановлюємо кольори для світлодіодів
+    WS281BsetLED(HsvToRgb(blinkyColor));
+    // Перемикаємо стан для наступного кольору
+    toggle = 1 - toggle; // Якщо було 0, стане 1, і навпаки
+    return 800;  // Повертаємо 800 мс
     default:
         return DURATION_NEVER;
     }
